@@ -83,7 +83,7 @@ public class Partie {
         return compteur;
     }
     
-    private ArrayList<Pion> verifierPrisePossible(boolean estBlanc){
+    protected ArrayList<Pion> verifierPrisePossible(boolean estBlanc){
         ArrayList<Pion> listePionPouvantPrendre;
         listePionPouvantPrendre = new ArrayList<Pion>();
         for (int i = 0; i < this.getListePions().size(); i++) {
@@ -95,7 +95,7 @@ public class Partie {
         return listePionPouvantPrendre;
     }
     
-    public boolean verifierPrisePossible(Pion pion){
+    protected boolean verifierPrisePossible(Pion pion){
         int[][] mouvements = {
             {1,1},
             {1,-1},
@@ -106,7 +106,10 @@ public class Partie {
         for (int i = 0; i < mouvements.length; i++){
             int x = pion.getX();
             int y = pion.getY();
-            if(verifierCase(x+mouvements[i][0], y+mouvements[i][1]) != null && verifierCase(x+mouvements[i][0], y+mouvements[i][1]).isBlanc()==pion.isBlanc()){
+            if(verifierCase(x+mouvements[i][0], y+mouvements[i][1]) != null){
+                if(verifierCase(x+mouvements[i][0], y+mouvements[i][1]).isBlanc()==pion.isBlanc()){//If the pawns are the same color, the pawn can't be killed cause they are not ennemies
+                    continue;
+                }
                 int newx= x+mouvements[i][0]*2;
                 int newy= y+mouvements[i][1]*2;
                 if (newx < 0 || newx >= taillePlateau || newy < 0 || newy >= taillePlateau ){

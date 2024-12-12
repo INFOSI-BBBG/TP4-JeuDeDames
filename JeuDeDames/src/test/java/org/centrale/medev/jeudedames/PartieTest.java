@@ -74,7 +74,7 @@ public class PartieTest {
      * Test of verifierCase method, of class Partie.
      */
     @ParameterizedTest
-    @CsvSource({"1,0,0,0,false"})
+    @CsvSource({"1,0,0,0,false","1,0,2,1,true","1,0,0,1,false"})
     public void testVerifierPrisePossible(int xBlanc, int yBlanc, int xNoir, int yNoir, boolean prisePossible) {
         System.out.println("verifierPrisePossible");
         // Création d'une partie avec les bons nombres de pions        
@@ -83,9 +83,20 @@ public class PartieTest {
         listPions.add(new Pion(true, xBlanc, yBlanc));
         listPions.add(new Pion(false, xNoir, yNoir));
         partie.setListePions(listPions);
-        System.out.println("listPions.get(0)" + listPions.get(0));
-        boolean expResult = partie.verifierPrisePossible(listPions.get(0));
-        assertEquals(expResult, prisePossible);
+        System.out.println(xBlanc+","+ yBlanc+","+ xNoir+","+ yNoir+","+ prisePossible);
+        boolean result = partie.verifierPrisePossible(listPions.get(0));
+        System.out.println("result: "+ result);
+        assertEquals(result, prisePossible);
+        
+        // On vérfie que c'est toujours false quand les deux pions ont la même couleur
+        ArrayList<Pion> otherListPions = new ArrayList<>();
+        otherListPions.add(new Pion(true, xBlanc, yBlanc));
+        otherListPions.add(new Pion(true, xNoir, yNoir));
+        partie.setListePions(otherListPions);
+        System.out.println(xBlanc+","+ yBlanc+","+ xNoir+","+ yNoir+","+ false);
+        result = partie.verifierPrisePossible(otherListPions.get(0));
+        System.out.println("result: "+ result);
+        assertEquals(result, false);
     }
     
 }
