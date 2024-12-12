@@ -95,7 +95,7 @@ public class Partie {
         return listePionPouvantPrendre;
     }
     
-    private boolean verifierPrisePossible(Pion pion){
+    public boolean verifierPrisePossible(Pion pion){
         int[][] mouvements = {
             {1,1},
             {1,-1},
@@ -106,8 +106,7 @@ public class Partie {
         for (int i = 0; i < mouvements.length; i++){
             int x = pion.getX();
             int y = pion.getY();
-            pionAAttaquer = verifierCase(x+mouvements[i][0], y+mouvements[i][1]);
-            if(pionAAttaquer != null){
+            if(verifierCase(x+mouvements[i][0], y+mouvements[i][1]) != null && verifierCase(x+mouvements[i][0], y+mouvements[i][1]).isBlanc()==pion.isBlanc()){
                 int newx= x+mouvements[i][0]*2;
                 int newy= y+mouvements[i][1]*2;
                 if (newx < 0 || newx >= taillePlateau || newy < 0 || newy >= taillePlateau ){
