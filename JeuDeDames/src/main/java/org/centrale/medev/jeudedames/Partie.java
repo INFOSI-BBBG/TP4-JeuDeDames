@@ -104,6 +104,28 @@ public class Partie {
     }
     
     /**
+     * renvoi la liste de tous les pions déplacables
+     * @param EstBlanc true si on veut déplacer un pion blanc
+     */
+    private ArrayList<Pion> ListePionDeplacable(Boolean EstBlanc){
+        ArrayList<Pion> listePossible = new ArrayList<>();
+        int dplY=-1;
+        if(EstBlanc){
+            dplY=1;
+        }
+        for(Pion pion: listePions){
+            if(pion.isBlanc()!=EstBlanc){
+                if((verifierCase(pion.getX()+1,pion.getY()+dplY)==null) && pion.getX()+1<10 && pion.getY()+dplY<10 && pion.getY()+dplY>=0){  //on verif la case en avant à droite
+                    listePossible.add(pion);
+                }else if((verifierCase(pion.getX()-1,pion.getY()+dplY)==null) && pion.getX()-1>=0 && pion.getY()+dplY<10 && pion.getY()+dplY>=0){ //on verif la case en avant à gauche
+                    listePossible.add(pion);
+                }
+            }
+        }
+        return listePossible;
+    }
+    
+    /**
      * Compte le nombre de pions d'un couleur
      * @param blanc Couleur à compter
      * @return      Nombre de pions
