@@ -12,6 +12,7 @@ import java.util.ArrayList;
  */
 public class Partie {
     private ArrayList<Pion> listePions; 
+    public final int taillePlateau = 10;
 
     public ArrayList<Pion> getListePions() {
         return listePions;
@@ -80,5 +81,46 @@ public class Partie {
         }
         
         return compteur;
+    }
+    
+    private ArrayList<Pion> verifierPrisePossible(boolean estBlanc){
+        ArrayList<Pion> listePionPouvantPrendre;
+        listePionPouvantPrendre = new ArrayList<Pion>();
+        for (int i = 0; i < this.getListePions().size(); i++) {
+            Pion pionTest = this.getListePions().get(i);
+           if (pionTest.isBlanc() == estBlanc){
+               verifierPrisePossible(pionTest);
+           }
+        }
+        return listePionPouvantPrendre;
+    }
+    
+    private boolean verifierPrisePossible(Pion pion){
+        int[][] mouvements = {
+            {1,1},
+            {1,-1},
+            {-1,-1},
+            {-1,1}
+        };
+        Pion pionAAttaquer;
+        for (int i = 0; i < mouvements.length; i++){
+            int x = pion.getX();
+            int y = pion.getY();
+            pionAAttaquer = verifierCase(x+mouvements[i][0], y+mouvements[i][1]);
+            if(pionAAttaquer != null){
+                int newx= x+mouvements[i][0]*2;
+                int newy= y+mouvements[i][1]*2;
+                if (newx < 0 || newx >= taillePlateau || newy < 0 || newy >= taillePlateau ){
+                    continue;
+                }
+                Pion caseArrivée = verifierCase(newx, newy);
+                if (caseArrivée !=null){
+                    continue;
+                }
+                return true;// Once we find a possible landing behind an ennemy pawn, we consider that this method pawn is forced to eat. 
+            }
+        }
+        
+        return false;
     }
 }
