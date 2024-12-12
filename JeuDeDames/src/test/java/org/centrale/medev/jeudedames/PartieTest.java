@@ -11,10 +11,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+<<<<<<< HEAD
 
 /**
  *
  * @author Quent
+=======
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+/**
+ *
+ * @author simon
+>>>>>>> main
  */
 public class PartieTest {
     
@@ -37,6 +46,7 @@ public class PartieTest {
     public void tearDown() {
     }
 
+<<<<<<< HEAD
     
 
     /**
@@ -77,6 +87,37 @@ public class PartieTest {
         assertEquals(p3, instance.verifierCase(0, 1));
         assertEquals(p4, instance.verifierCase(9, 3));
         assertEquals(null, instance.verifierCase(1, 0));
+=======
+    /**
+     * Test of compter method, of class Partie.
+     * @param nbBlanc   Nombre de pions blancs à trouver
+     * @param nbNoir    Nombre de pions noirs à trouver
+     */
+    @ParameterizedTest
+    @CsvSource({"10,10", "10,0", "0,10", "0,0"})
+    public void testCompter(int nbBlanc, int nbNoir) {
+        System.out.println("compter B" + nbBlanc + " N" + nbNoir);
+        
+        // Création d'une partie avec les bons nombres de pions        
+        Partie partie = new Partie();
+        ArrayList<Pion> listPions = new ArrayList<>();
+        
+        for (int i = 0; i < nbNoir || i < nbBlanc; i++) {
+            if (i < nbBlanc) {
+                listPions.add(new Pion(true, 0, 0));
+            }
+            
+            if (i < nbNoir) {
+                listPions.add(new Pion(false, 0, 0));
+            }
+        }
+        
+        partie.setListePions(listPions);
+        
+        // Test du nombres de pions
+        assertEquals(partie.compter(true), nbBlanc);
+        assertEquals(partie.compter(false), nbNoir);
+>>>>>>> main
     }
     
 }
