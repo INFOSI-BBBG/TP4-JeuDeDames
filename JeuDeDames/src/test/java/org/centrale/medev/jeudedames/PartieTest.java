@@ -5,40 +5,15 @@
 package org.centrale.medev.jeudedames;
 
 import java.util.ArrayList;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 /**
- *
+ * Classe de test pour Partie
  * @author simon
  */
 public class PartieTest {
-    
-    public PartieTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
-    }
-
     /**
      * Test of compter method, of class Partie.
      * @param nbBlanc   Nombre de pions blancs à trouver
@@ -46,7 +21,7 @@ public class PartieTest {
      */
     @ParameterizedTest
     @CsvSource({"10,10", "10,0", "0,10", "0,0"})
-    public void testCompter(int nbBlanc, int nbNoir) {
+    void testCompter(int nbBlanc, int nbNoir) {
         System.out.println("compter B" + nbBlanc + " N" + nbNoir);
         
         // Création d'une partie avec les bons nombres de pions        
