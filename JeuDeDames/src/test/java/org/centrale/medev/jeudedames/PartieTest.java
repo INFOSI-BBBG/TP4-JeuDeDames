@@ -18,6 +18,7 @@ import org.junit.jupiter.params.provider.CsvSource;
  *
  * @author simon
  */
+
 public class PartieTest {
     
     public PartieTest() {
@@ -37,6 +38,43 @@ public class PartieTest {
     
     @AfterEach
     public void tearDown() {
+    }
+    
+
+    /**
+     * Test of initPartie method, of class Partie.
+     */
+    @Test
+    public void testInitPartie() {
+        System.out.println("initPartie");
+        Partie instance = new Partie();
+        instance.initPartie();
+        ArrayList<Pion> listeCree = instance.getListePions();
+        assertTrue(listeCree.size()==40);
+        assertTrue(listeCree.get(0).getX()==0 && listeCree.get(0).getY()==0);
+        for(Pion pion : listeCree){
+            assertTrue((pion.getX()+pion.getY())%2==0 && pion.getX()>=0 && pion.getX()<10 && pion.getY()>=0 && pion.getY()<10);
+        }
+    }
+
+    /**
+     * Test of verifierCase method, of class Partie.
+     * @param estBlanc
+     * @param estReine 
+     * @param x coordonnée en x du point a tester
+     * @param y coordonées en y du point a tester
+     */
+    @ParameterizedTest
+    @CsvSource({"true,false,0,0", "false,false,2,8", "true,false,8,4", "false,true,9,1"})
+    public void testVerifierCase(Boolean estBlanc,Boolean estReine, int x, int y) {
+        System.out.println("verifierCase");
+        Pion p1= new Pion(estBlanc, x, y);
+        p1.setReine(estReine);
+        ArrayList<Pion> liste=new ArrayList<>();
+        liste.add(p1);
+        Partie instance = new Partie(liste);
+        assertEquals(p1, instance.verifierCase(x, y));
+        assertEquals(null, instance.verifierCase(x+1, y+1));
     }
 
     /**
