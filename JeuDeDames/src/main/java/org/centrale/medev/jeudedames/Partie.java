@@ -107,7 +107,7 @@ public class Partie {
      * renvoi la liste de tous les pions déplacables
      * @param EstBlanc true si on veut déplacer un pion blanc
      */
-    private ArrayList<Pion> ListePionDeplacable(Boolean EstBlanc){
+    public ArrayList<Pion> ListePionDeplacable(Boolean EstBlanc){
         ArrayList<Pion> listePossible = new ArrayList<>();
         int dplY=-1;
         if(EstBlanc){
@@ -115,14 +115,37 @@ public class Partie {
         }
         for(Pion pion: listePions){
             if(pion.isBlanc()!=EstBlanc){
-                if((verifierCase(pion.getX()+1,pion.getY()+dplY)==null) && pion.getX()+1<10 && pion.getY()+dplY<10 && pion.getY()+dplY>=0){  //on verif la case en avant à droite
-                    listePossible.add(pion);
-                }else if((verifierCase(pion.getX()-1,pion.getY()+dplY)==null) && pion.getX()-1>=0 && pion.getY()+dplY<10 && pion.getY()+dplY>=0){ //on verif la case en avant à gauche
+                ArrayList<int[]> caseATester= new ArrayList<>();
+                
+                int[] caseGauche={pion.getX()-1,pion.getY()+dplY};
+                caseATester.add(caseGauche);
+                
+                int[] caseDroite={pion.getX()+1,pion.getY()+dplY};
+                caseATester.add(caseDroite);
+                
+                if(pion.isReine()){
+                    int[] caseArGauche={pion.getX()-1,pion.getY()-dplY};
+                    caseATester.add(caseArGauche);
+
+                    int[] caseArDroite={pion.getX()+1,pion.getY()-dplY};
+                    caseATester.add(caseArDroite);
+                }
+                if (verifierUneCasesVide(caseATester)){
                     listePossible.add(pion);
                 }
             }
         }
         return listePossible;
+    }
+    
+    private boolean verifierUneCasesVide(ArrayList<int[]> coordonees){
+        for(int[] coo : coordonees){
+            //on verifie que la case est dans le tableau et qu'elle est vide
+            if((coo[0]<10 && coo[0]>=0 && coo[1]<10 && coo[1]>=0) && verifierCase(coo[0], coo[1])==null){  
+                return true;
+            }
+        }
+        return false;
     }
     
     /**

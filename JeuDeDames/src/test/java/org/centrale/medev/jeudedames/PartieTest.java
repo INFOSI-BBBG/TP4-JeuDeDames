@@ -107,5 +107,18 @@ public class PartieTest {
         assertEquals(partie.compter(true), nbBlanc);
         assertEquals(partie.compter(false), nbNoir);
     }
+
+    /**
+     * Test of ListePionDeplacable method, of class Partie.
+     */
+    @Test
+    public void testListePionDeplacable() {
+        System.out.println("ListePionDeplacable");
+        Partie instance = new Partie();
+        instance.initPartie();
+        ArrayList<Pion> result = instance.ListePionDeplacable(true);
+        assertTrue(result.size()==5);
+       
+    }
     
 }
