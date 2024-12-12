@@ -129,6 +129,7 @@ public class Partie {
         
         int sensPlateau; //pour déterminer le sens du plateau et de G/D
         
+        
         boolean aMange= false; //on stocke si le pion à manger un pion 
         
         while (bouffon) {
@@ -181,23 +182,23 @@ public class Partie {
                     pion.setY(newY);
                     pion.setX(newX); 
                     bouffon = false; 
-                } else { 
-                    //s'il y a un pion sur la case, on teste s'il est prenable
-                    Pion pionBloquant = verifierCase(newX + choixValeur, newY + sensPlateau); 
-                    // s'il est prenable, on mange le pion en le supprimant de la liste, on renvoie true 
-                    if (isNull(pionBloquant)){
-                        pion.setY(newY+sensPlateau); 
-                        pion.setX(newX+choixValeur); 
+                    break; 
+                }  
+                //s'il y a un pion sur la case, on teste s'il est prenable
+                Pion pionBloquant = verifierCase(newX + choixValeur, newY + sensPlateau); 
+                // s'il est prenable, on mange le pion en le supprimant de la liste, on renvoie true 
+                if (isNull(pionBloquant)){
+                    pion.setY(newY+sensPlateau); 
+                    pion.setX(newX+choixValeur); 
 
-                        // on supprime le pion mangé
-                        this.getListePions().remove(pionAManger); 
-                        aMange =true;
-                        bouffon = false; 
-                    } else {
-                        //si le pion est bloqué et ne peut pas se déplacer dans cette direction
-                        bouffon = true; //on redemande au joueur de choisir une direction
-                    }   
-                }
+                    // on supprime le pion mangé
+                    this.getListePions().remove(pionAManger); 
+                    aMange =true;
+                    bouffon = false; 
+                    break; 
+                } 
+                //si le pion est bloqué et ne peut pas se déplacer dans cette direction
+                bouffon = true; //on redemande au joueur de choisir une direction
             }
         }
         return aMange; 
