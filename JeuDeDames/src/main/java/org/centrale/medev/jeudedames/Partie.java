@@ -32,4 +32,21 @@ public class Partie {
          }
         return null; 
     }
+    
+    /**
+     * Compte le nombre de pions d'un couleur
+     * @param blanc Couleur à compter
+     * @return      Nombre de pions
+     */
+    protected int compter(boolean blanc) {
+        int compteur = 0;
+        
+        for (Pion pion: this.listePions) {
+            if (pion.isBlanc() == blanc) {
+                compteur++;
+            }
+        }
+        
+        return compteur;
+    }
 }
