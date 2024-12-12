@@ -11,20 +11,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-<<<<<<< HEAD
-
-/**
- *
- * @author Quent
-=======
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 /**
  *
  * @author simon
->>>>>>> main
  */
+
 public class PartieTest {
     
     public PartieTest() {
@@ -45,8 +39,6 @@ public class PartieTest {
     @AfterEach
     public void tearDown() {
     }
-
-<<<<<<< HEAD
     
 
     /**
@@ -67,27 +59,24 @@ public class PartieTest {
 
     /**
      * Test of verifierCase method, of class Partie.
+     * @param estBlanc
+     * @param estReine 
+     * @param x coordonnée en x du point a tester
+     * @param y coordonées en y du point a tester
      */
-    @Test
-    public void testVerifierCase() {
+    @ParameterizedTest
+    @CsvSource({"true,false,0,0", "false,false,2,8", "true,false,8,4", "false,true,9,1"})
+    public void testVerifierCase(Boolean estBlanc,Boolean estReine, int x, int y) {
         System.out.println("verifierCase");
-        Pion p1= new Pion(true, 0, 0);
-        Pion p2= new Pion(false, 2, 7);
-        Pion p3= new Pion(true,0,1);
-        Pion p4= new Pion(false,9,3);
-        p4.setReine(true);
+        Pion p1= new Pion(estBlanc, x, y);
+        p1.setReine(estReine);
         ArrayList<Pion> liste=new ArrayList<>();
         liste.add(p1);
-        liste.add(p2);
-        liste.add(p3);
-        liste.add(p4);
         Partie instance = new Partie(liste);
-        assertEquals(p1, instance.verifierCase(0, 0));
-        assertEquals(p2, instance.verifierCase(2, 7));
-        assertEquals(p3, instance.verifierCase(0, 1));
-        assertEquals(p4, instance.verifierCase(9, 3));
-        assertEquals(null, instance.verifierCase(1, 0));
-=======
+        assertEquals(p1, instance.verifierCase(x, y));
+        assertEquals(null, instance.verifierCase(x+1, y+1));
+    }
+
     /**
      * Test of compter method, of class Partie.
      * @param nbBlanc   Nombre de pions blancs à trouver
@@ -117,7 +106,6 @@ public class PartieTest {
         // Test du nombres de pions
         assertEquals(partie.compter(true), nbBlanc);
         assertEquals(partie.compter(false), nbNoir);
->>>>>>> main
     }
     
 }
