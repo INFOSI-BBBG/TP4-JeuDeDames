@@ -117,7 +117,7 @@ public class Partie {
      * @param pion
      * @return  un booléan en fonction de si le pion a mangé quelqu'un ou non
      */
-    private boolean deplacement(Pion pion){
+    public boolean deplacement(Pion pion){
         Scanner scanner = new Scanner(System.in);
         String choix;
         int choixValeur = 1; //pour conserver le choix du joueur G/D, G= -1, D=+1
@@ -133,64 +133,72 @@ public class Partie {
         
         while (bouffon) {
         
-        //si le pion est blanc, on se trouve "en bas" du plateau donc y doit faire +1
-        //si le pion est noir, on se trouve "en haut" du plateau donc y doit faire -1 
-        if (pion.isBlanc()) {
-            sensPlateau = 1; 
-        } else {
-            sensPlateau = -1; 
-        }
-        
-        boolean askFlag = true;
-        do {
-            //gauche et droite dépend de l'affichage du plateau
-            System.out.println("Choix de déplacement du Pion Gauche ou Droite: G/D");
-            choix = scanner.nextLine();
-            
-            askFlag = false;  // Tant que choix n'est pas validé, on suppose qu'il est valide
-            
-            switch (choix) {
-                case "G":
-                    newY=pion.getY() + sensPlateau; 
-                    choixValeur= -1; 
-                    newX=pion.getX() + choixValeur;  
-                    break;
-                    
-                case "D":
-                    newY=pion.getY() + sensPlateau; 
-                    choixValeur= 1; 
-                    newX=pion.getX() + choixValeur; 
-                    break;
-                    
-                default:
-                    askFlag = true;
-            }
-        } while (askFlag);
-        
-        //tester s'il y a un pion sur la case, et si on peut le manger       
-        Pion pionAManger = verifierCase(newX, newY); 
-        //s'il n'y a pas de pion sur la case, on s'y déplace
-        if (isNull(pionAManger)){
-            pion.setY(newY);
-            pion.setX(newX); 
-            bouffon = false; 
-        } else { 
-            //s'il y a un pion sur la case, on teste s'il est prenable
-            Pion pionBloquant = verifierCase(newX + choixValeur, newY + sensPlateau); 
-            // s'il est prenable, on mange le pion en le supprimant de la liste, on renvoie true 
-            if (isNull(pionBloquant)){
-                pion.setY(newY+sensPlateau); 
-                pion.setX(newX+choixValeur); 
-                
-                // on supprime le pion mangé
-                this.getListePions().remove(pionAManger); 
-                aMange =true;
-                bouffon = false; 
+            //si le pion est blanc, on se trouve "en bas" du plateau donc y doit faire +1
+            //si le pion est noir, on se trouve "en haut" du plateau donc y doit faire -1 
+            if (pion.isBlanc()) {
+                sensPlateau = 1; 
             } else {
-                //si le pion est bloqué et ne peut pas se déplacer dans cette direction
-                bouffon = true; //on redemande au joueur de choisir une direction
-            }   
-        }
+                sensPlateau = -1; 
+            }
+
+            boolean askFlag = true;
+            do {
+                //gauche et droite dépend de l'affichage du plateau
+                System.out.println("Choix de déplacement du Pion Gauche ou Droite: G/D");
+                choix = scanner.nextLine();
+
+                askFlag = false;  // Tant que choix n'est pas validé, on suppose qu'il est valide
+
+                switch (choix) {
+                    case "G":
+                        newY=pion.getY() + sensPlateau; 
+                        choixValeur= -1; 
+                        newX=pion.getX() + choixValeur;  
+                        break;
+
+                    case "D":
+                        newY=pion.getY() + sensPlateau; 
+                        choixValeur= 1; 
+                        newX=pion.getX() + choixValeur; 
+                        break;
+
+                    default:
+                        askFlag = true;
+                }
+            } while (askFlag);
+
+
+            //on teste si on demande de sortir du plateau
+            if ((newX<0)||(newY<0)||(newX>9)||(newX>9)){
+                //on redemande au joueur de choisir un déplcement
+                bouffon= true; 
+            }else {
+
+                //tester s'il y a un pion sur la case, et si on peut le manger       
+                Pion pionAManger = verifierCase(newX, newY); 
+                //s'il n'y a pas de pion sur la case, on s'y déplace
+                if (isNull(pionAManger)){
+                    pion.setY(newY);
+                    pion.setX(newX); 
+                    bouffon = false; 
+                } else { 
+                    //s'il y a un pion sur la case, on teste s'il est prenable
+                    Pion pionBloquant = verifierCase(newX + choixValeur, newY + sensPlateau); 
+                    // s'il est prenable, on mange le pion en le supprimant de la liste, on renvoie true 
+                    if (isNull(pionBloquant)){
+                        pion.setY(newY+sensPlateau); 
+                        pion.setX(newX+choixValeur); 
+
+                        // on supprime le pion mangé
+                        this.getListePions().remove(pionAManger); 
+                        aMange =true;
+                        bouffon = false; 
+                    } else {
+                        //si le pion est bloqué et ne peut pas se déplacer dans cette direction
+                        bouffon = true; //on redemande au joueur de choisir une direction
+                    }   
+                }
+            }
         }
         return aMange; 
     }
