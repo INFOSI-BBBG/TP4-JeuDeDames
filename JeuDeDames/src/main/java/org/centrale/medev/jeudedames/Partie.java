@@ -21,7 +21,39 @@ public class Partie {
         this.listePions = listePions;
     }
     
-    
+        public void afficher(){
+        System.out.println(" --- --- --- --- --- --- --- --- --- --- ");
+        for(int lgnY =9; lgnY>=0;lgnY--){
+            for(int colX=0; colX<10;colX++){
+                System.out.print("|");
+                if((colX+lgnY)%2==1){
+                    Pion contenuCase=verifierCase(lgnY, colX);
+                    if(contenuCase==null){
+                        System.out.print(" ~ ");
+                    }else{
+                        if(contenuCase.isBlanc()){
+                            if(contenuCase.isReine()){
+                                System.out.print(" B ");
+                            }else{
+                                System.out.print(" b ");
+                            }
+                        }else{
+                            if(contenuCase.isReine()){
+                                System.out.print(" N ");
+                            }else{
+                                System.out.print(" n ");
+                            }
+                        }
+                    }
+                }else{
+                    System.out.print("   ");
+                }
+            }
+            System.out.println("|");
+            System.out.println(" --- --- --- --- --- --- --- --- --- --- ");
+        }
+    }
+        
     
     public Pion verifierCase(int x, int y){
         
