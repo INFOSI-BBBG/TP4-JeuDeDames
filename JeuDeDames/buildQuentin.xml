@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+
+<project name="JeuDeDames" default="build" basedir="."> 
+    <description>This is a simple test project.</description>
+    <property name="lib" location="lib"/>
+    <path id="imports">
+        <fileset dir="${lib}">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
+
+    <target name="checkDependencies" description="Check if dependencies are satisfied">
+        <property name="src.location" location="src"/> 
+        <property name="classes.location" location="target/classes"/>
+        <property name="classesTest.location" location="target/test-classes"/>
+
+        <echo message="Source directory is ${src.location}"/> 
+        <echo message="Classes directory is ${classes.location}"/>
+        <echo message="Classes Test directory is ${classesTest.location}"/>
+
+        <condition property="src.available"> 
+            <and> 
+                <available file="${src.location}" type="dir"/> 
+                <available file="${classes.location}" type="dir"/> 
+            </and> 
+        </condition>
+    </target>
+
+    <target name="build" description="Build the application" depends="checkDependencies" if="src.available"> 
+        <echo message="Building application..."/>
+        <javac srcdir="${src.location}/main" destdir="${classes.location}" includeAntRuntime="false"/>
+        <echo message="Done!"/>
+        <echo message="Building Tests..."/>
+        <javac srcdir="${src.location}/test" destdir="${classesTest.location}" includeAntRuntime="false">
+            <classpath>
+                <path refid="imports"/>
+                <pathelement path="${classes.location}"/>
+            </classpath>
+        </javac>
+
+        <echo message="Done!"/>
+    </target>
+
+</project>
+
+
+<!-- classpath -->
