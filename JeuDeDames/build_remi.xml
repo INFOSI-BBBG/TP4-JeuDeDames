@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="testAnt" default="target" basedir=".">
+<project name="testAnt" default="all" basedir=".">
     <description>This is a simple test projet.</description>
 
     <target name="checkDependencies"
@@ -33,6 +33,12 @@
         <javac srcdir="${src.location}/main" destdir="${classes.location}" includeAntRuntime="false"/>
         <javac srcdir="${src.location}/test" destdir="${classes.location}" includeAntRuntime="false" classpathref="classpath"/>
 
+        <echo message="Done!"/>
+    </target>
+
+    <target name="jar" depends="checkDependencies, target" description="Create a JAR file for the application">
+        <echo message="Creating a JAR file..."/>
+
         <jar destfile="build/main/checksites.jar">
             <fileset dir="${classes.location}"/>
             <manifest>
@@ -40,6 +46,12 @@
                     value="org.centrale.medev.jeudedames.JeuDeDames"/>
             </manifest>
         </jar>
+
+        <echo message="Done!"/>
+    </target>
+
+    <target name="javadoc" depends="checkDependencies, target" description="Generate Javadoc for the application">
+        <echo message="Generating Javadoc..."/>
 
         <javadoc destdir="docs" sourcepath="${src.location}">
             <fileset dir="${src.location}">
@@ -49,4 +61,21 @@
 
         <echo message="Done!"/>
     </target>
+
+    <!-- https://junit.org/junit5/docs/snapshot/user-guide/#running-tests-build-ant -->
+    <!-- <target name="test.junit.launcher" depends="compile">
+        <junitlauncher haltOnFailure="true" printSummary="true">
+            <classpath refid="test.classpath"/>
+            <testclasses outputdir="build/test-report">
+                <fileset dir="build/test">
+                    <include name="**/*Tests.class"/>
+                </fileset>
+                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true"/>
+                <listener type="legacy-plain" sendSysOut="true" />
+            </testclasses>
+        </junitlauncher>
+    </target> -->
+
+    <target name="all" depends="checkDependencies, target, jar, javadoc" description="Build the application, create a JAR file, and generate Javadoc"/>
+
 </project>
