@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="testAnt" default="target" basedir=".">
+    <description>This is a simple test projet.</description>
+
+    
+
+    <target name="checkDependencies"
+        description="Check if all dependencies are satisfied">
+        <property name="src.location" location="src"/>
+        <property name="classes.location" location="target/classes"/>
+        <property name="dist" location="dist"/>
+        <property name="lib.dir" location="lib"/>
+
+        <path id="classpath">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+        </path>
+
+        <echo message="Source directory is ${src.location}"/>
+        <echo message="Classes directory is ${classes.location}"/>
+        <echo message="Distribution directory is ${dist}"/>
+
+        <condition property="src.available">
+            <and>
+                <available file="${src.location}" type="dir"/>
+                <available file="${classes.location}" type="dir"/>
+            </and>
+        </condition>
+    </target>
+
+    <target name="target" description="Build the application" depends="checkDependencies" if="src.available">
+        <echo message="Building the application..."/>
+
+        <javac srcdir="${src.location}/main" destdir="${classes.location}" includeAntRuntime="false"/>
+        <javac srcdir="${src.location}/test" destdir="${classes.location}" includeAntRuntime="false" classpathref="classpath"/>
+
+        <jar destfile="build/main/checksites.jar">
+            <fileset dir="${classes.location}"/>
+            <manifest>
+                <attribute name="Main-Class"
+                    value="org.centrale.medev.jeudedames.JeuDeDames"/>
+            </manifest>
+        </jar>
+
+        <javadoc destdir="docs" sourcepath="${src.location}"> </javadoc>
+
+        <echo message="Done!"/>
+    </target>
+</project>
