@@ -2,8 +2,6 @@
 <project name="testAnt" default="target" basedir=".">
     <description>This is a simple test projet.</description>
 
-    
-
     <target name="checkDependencies"
         description="Check if all dependencies are satisfied">
         <property name="src.location" location="src"/>
@@ -43,7 +41,11 @@
             </manifest>
         </jar>
 
-        <javadoc destdir="docs" sourcepath="${src.location}"> </javadoc>
+        <javadoc destdir="docs" sourcepath="${src.location}">
+            <fileset dir="${src.location}">
+                <include name="**/*.java"/>
+            </fileset>
+        </javadoc>
 
         <echo message="Done!"/>
     </target>
