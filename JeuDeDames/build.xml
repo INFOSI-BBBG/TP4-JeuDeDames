@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name ="JeuDeDames" default="javadoc" basedir=".">
+    <description> This is a simple test project.</description>
+    
+    
+    <target name ="checkDependencies"
+        description ="Check if dependencies are satisfied">
+        <property name="src.location" location="src"/>
+        <property name="lib" location="lib"/>
+        <property name ="classes.location" location="target/classes"/>
+    
+        <echo message ="Source directory is ${src.location}"/>
+        <echo message="Classes directory is ${classes.location}"/>
+    
+
+        <condition property="src.available">
+            <and>
+                <available file ="${src.location}" type="dir"/>
+                <available file= "${classes.location}" type="dir"/>
+            </and>
+        </condition>
+    </target>
+
+    <target name = "build" description ="Build the application"
+        depends="checkDependencies" if ="src.available">
+        <echo message ="Building application..."/>
+        <javac srcdir="${src.location}" destdir="${classes.location}"
+            includeAntRuntime="false">
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name ="**.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+        <echo message ="Done!"/>
+    </target>
+
+    <target name ="javadoc">
+        <javadoc sourcepath="src" destdir="doc">
+            <fileset dir = "src" defaultexcludes="yes">
+                <include name="**"/>
+            </fileset>
+        </javadoc>
+    </target>
+
+    <target name="jar">
+        <jar jarfile="JeuDeDames.jar" basedir="src"/>
+        
+    </target>
+
+    <target name="tests">
+        <junitlauncher>
+            <classpath>
+                <fileset dir="lib">
+                    <include name ="**.jar"/>
+                </fileset>
+            </classpath>
+
+            <classpath>
+                <pathelement location ="classes.location"/>
+            </classpath>
+            <testclasses outputdir="tests">
+                <fileset dir="classes.location"/>
+                <listener type="legacy-brief" sendSysOut="true"/>
+                <listener type="legacy-xml" sendSysErr="true" sendSysOut="true"/>
+            </testclasses>
+        </junitlauncher>
+
+        <junitreport todir="reports">
+            <fileset dir="reports">
+                <include name="Test-*.xml"/>
+            </fileset>
+            <report format="frames" todir="reports"/>
+        </junitreport>
+    </target>
+
+</project>

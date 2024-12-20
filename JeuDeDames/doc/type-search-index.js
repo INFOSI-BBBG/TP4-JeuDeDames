@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"org.centrale.medev.jeudedames","l":"JeuDeDames"},{"p":"org.centrale.medev.jeudedames","l":"Partie"},{"p":"org.centrale.medev.jeudedames","l":"PartieTest"},{"p":"org.centrale.medev.jeudedames","l":"Pion"}];updateSearchResults();
