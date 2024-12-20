@@ -253,8 +253,8 @@ public class Partie {
                 if (newx < 0 || newx >= taillePlateau || newy < 0 || newy >= taillePlateau ){
                     continue;
                 }
-                Pion caseArrivée = verifierCase(newx, newy);
-                if (caseArrivée !=null){
+                Pion caseArrivee = verifierCase(newx, newy);
+                if (caseArrivee !=null){
                     continue;
                 }
                 return true;// Once we find a possible landing behind an ennemy pawn, we consider that this method pawn is forced to eat. 
