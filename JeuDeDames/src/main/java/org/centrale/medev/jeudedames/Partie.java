@@ -139,7 +139,6 @@ public class Partie {
             {-1,-1},
             {-1,1}
         };
-        Pion pionAAttaquer;
         for (int i = 0; i < mouvements.length; i++){
             int x = pion.getX();
             int y = pion.getY();
